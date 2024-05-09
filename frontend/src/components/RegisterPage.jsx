@@ -1,72 +1,56 @@
-import React, { useState } from "react";
+import React from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { Button, Typography } from "@mui/material";
+
+const registrationSchema = Yup.object().shape({
+  username: Yup.string()
+    .required("Username is required")
+    .min(4, "Username must be at least 4 characters long"),
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  password: Yup.string()
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters long"),
+});
 
 function RegisterPage() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setError("");
-    if (!username || !email || !password) {
-      setError("All fields are required.");
-      return;
-    }
-    try {
-      const response = await fetch("http://localhost:5000/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, email, password }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        console.log("Registration successful:", data);
-        // Redirect or handle registration success
-      } else {
-        setError("Registration failed: " + (data.msg || "Unknown error"));
-      }
-    } catch (error) {
-      setError("Server error, please try again later.");
-    }
-  };
-
   return (
     <div>
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Email:
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        <br />
-        <button type="submit">Register</button>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-      </form>
+      <Typography variant="h4">Register</Typography>
+      <Formik
+        initialValues={{ username: "", email: "", password: "" }}
+        validationSchema={registrationSchema}
+        onSubmit={(values, { setSubmitting }) => {
+          setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            setSubmitting(false);
+          }, 400);
+        }}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <Field type="text" name="username" placeholder="Username" />
+            <ErrorMessage name="username" component="div" />
+
+            <Field type="email" name="email" placeholder="Email" />
+            <ErrorMessage name="email" component="div" />
+
+            <Field type="password" name="password" placeholder="Password" />
+            <ErrorMessage name="password" component="div" />
+
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              variant="contained"
+              color="primary"
+            >
+              Register
+            </Button>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 }
