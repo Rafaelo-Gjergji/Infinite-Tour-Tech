@@ -17,40 +17,81 @@ const registrationSchema = Yup.object().shape({
 
 function RegisterPage() {
   return (
-    <div>
-      <Typography variant="h4">Register</Typography>
-      <Formik
-        initialValues={{ username: "", email: "", password: "" }}
-        validationSchema={registrationSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <Field type="text" name="username" placeholder="Username" />
-            <ErrorMessage name="username" component="div" />
+    <div className="min-h-screen flex items-center justify-center bg-brand-grey">
+      <div className="p-6 rounded-lg shadow-lg bg-white max-w-md w-full">
+        <Typography variant="h4" className="text-center mb-4">
+          Register
+        </Typography>
+        <Formik
+          initialValues={{ username: "", email: "", password: "" }}
+          validationSchema={registrationSchema}
+          onSubmit={(values, { setSubmitting }) => {
+            setTimeout(() => {
+              alert(JSON.stringify(values, null, 2));
+              setSubmitting(false);
+            }, 400);
+          }}
+        >
+          {({ isSubmitting }) => (
+            <Form className="space-y-6">
+              <Field
+                type="text"
+                name="username"
+                placeholder="Username"
+                as={TextField}
+                variant="outlined"
+                fullWidth
+                margin="normal"
+              />
+              <ErrorMessage
+                name="username"
+                component="div"
+                className="text-red-500 text-xs italic"
+              />
 
-            <Field type="email" name="email" placeholder="Email" />
-            <ErrorMessage name="email" component="div" />
+              <Field
+                type="email"
+                name="email"
+                placeholder="Email"
+                as={TextField}
+                variant="outlined"
+                fullWidth
+                margin="normal"
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="text-red-500 text-xs italic"
+              />
 
-            <Field type="password" name="password" placeholder="Password" />
-            <ErrorMessage name="password" component="div" />
+              <Field
+                type="password"
+                name="password"
+                placeholder="Password"
+                as={TextField}
+                variant="outlined"
+                fullWidth
+                margin="normal"
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="text-red-500 text-xs italic"
+              />
 
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              variant="contained"
-              color="primary"
-            >
-              Register
-            </Button>
-          </Form>
-        )}
-      </Formik>
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                variant="contained"
+                color="primary"
+                className="w-full"
+              >
+                Register
+              </Button>
+            </Form>
+          )}
+        </Formik>
+      </div>
     </div>
   );
 }
