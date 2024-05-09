@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button, TextField, Typography } from "@mui/material";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -34,28 +35,29 @@ function LoginPage() {
 
   return (
     <div>
-      <h1>Login</h1>
+      <Typography variant="h4">Login</Typography>
       <form onSubmit={handleSubmit}>
-        <label>
-          Username:
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        <br />
-        <button type="submit">Login</button>
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        <TextField
+          label="Username"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <TextField
+          label="Password"
+          type="password"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button type="submit" variant="contained" color="primary">
+          Login
+        </Button>
+        {error && <Typography color="error">{error}</Typography>}
       </form>
     </div>
   );
