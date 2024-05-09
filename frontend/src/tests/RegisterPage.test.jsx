@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import RegisterPage from './RegisterPage';
 import { Provider } from 'react-redux';
-import store from '../store/store';  // Adjust the path as necessary
+import store from '../store/store';  
 
 test('renders register page and accepts input', () => {
     render(
