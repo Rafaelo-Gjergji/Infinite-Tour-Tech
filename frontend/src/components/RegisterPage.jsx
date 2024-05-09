@@ -8,8 +8,9 @@ function RegisterPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setError("");
     if (!username || !email || !password) {
-      setError("All fields are required");
+      setError("All fields are required.");
       return;
     }
     try {
@@ -25,10 +26,10 @@ function RegisterPage() {
         console.log("Registration successful:", data);
         // Redirect or handle registration success
       } else {
-        setError(data.error || "Failed to register");
+        setError("Registration failed: " + (data.msg || "Unknown error"));
       }
     } catch (error) {
-      setError("Failed to connect to the server");
+      setError("Server error, please try again later.");
     }
   };
 
@@ -64,8 +65,8 @@ function RegisterPage() {
         </label>
         <br />
         <button type="submit">Register</button>
+        {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 }
