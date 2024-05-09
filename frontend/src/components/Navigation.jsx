@@ -6,27 +6,48 @@ function Navigation() {
   const { currentUser, logout } = useAuth();
 
   return (
-    <nav style={{ marginBottom: "20px" }}>
-      <Link to="/">Home</Link>
-      {currentUser ? (
-        <>
-          <Link to="/dashboard" style={{ marginLeft: "10px" }}>
-            Dashboard
-          </Link>
-          <button onClick={logout} style={{ marginLeft: "10px" }}>
-            Logout
-          </button>
-        </>
-      ) : (
-        <>
-          <Link to="/login" style={{ marginLeft: "10px" }}>
-            Login
-          </Link>
-          <Link to="/register" style={{ marginLeft: "10px" }}>
-            Register
-          </Link>
-        </>
-      )}
+    <nav className="bg-white px-4 py-3 shadow-md">
+      <div className="container mx-auto flex justify-between items-center">
+        <Link
+          to="/"
+          className="text-lg font-semibold text-brand-blue hover:text-brand-grey"
+        >
+          Infinite Tour Technologies
+        </Link>
+        <div>
+          {currentUser ? (
+            <>
+              <Link
+                to="/dashboard"
+                className="text-brand-blue hover:text-brand-grey mx-4"
+              >
+                Dashboard
+              </Link>
+              <button
+                onClick={logout}
+                className="text-brand-blue hover:text-brand-grey"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="text-brand-blue hover:text-brand-grey mx-4"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="text-brand-blue hover:text-brand-grey"
+              >
+                Register
+              </Link>
+            </>
+          )}
+        </div>
+      </div>
     </nav>
   );
 }
